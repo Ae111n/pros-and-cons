@@ -9,7 +9,7 @@
         <div class="output">
             <div class="pros">
                 <legend>pros :</legend>
-                <ul v-for="(pro,index) in pros" :key="index">
+                <ul v-for="(pro, index) in pros" :key="index">
                     <li>{{ pro }} <span @click="deletePro(index)">X</span></li>
                 </ul>
             </div>
@@ -31,7 +31,6 @@ export default {
             input: '',
             pros: [],
             cons: []
-
         }
     },
     methods: {
@@ -69,10 +68,9 @@ export default {
             this.cons.splice(index, 1);
         },
         clear() {
-                this.input = '',
+            this.input = '',
                 this.cons = [],
                 this.pros = []
-                
         }
     }
 
@@ -97,8 +95,6 @@ html {
     background-image: radial-gradient(circle at left 30%, rgba(34, 34, 34, 0.3), rgba(34, 34, 34, 0.3) 80px, rgba(34, 34, 34, 0.5) 100px, rgba(51, 51, 51, 0.5) 160px, rgba(51, 51, 51, 0.5)), linear-gradient(215deg, transparent, transparent 100px, #222 260px, #222 320px, transparent), radial-gradient(circle at right, #111, rgba(51, 51, 51, 1));
     background-color: #333;
     color: whitesmoke;
-
-
 }
 
 .container {
@@ -112,7 +108,6 @@ html {
     width: 820px;
     width: 45%;
     margin: auto;
-
 }
 
 input {
@@ -124,7 +119,7 @@ input {
     padding-left: 12px;
     border: solid white;
     border-width: 3px 3px 5px 5px;
-    border-radius:4% 95% 6% 95%/95% 4% 92% 5%;
+    border-radius: 4% 95% 6% 95%/95% 4% 92% 5%;
 }
 
 input:focus {
@@ -161,6 +156,7 @@ button {
     transform: rotate(-2deg);
     padding-left: 12px;
 }
+
 span {
     float: right;
     margin-right: 13px;
