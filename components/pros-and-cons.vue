@@ -71,6 +71,12 @@ export default {
                 this.boardName = ''
             }
 
+
+
+  window.location.reload();
+
+
+
         },
         loadBoard(ID) {
             const boards = JSON.parse(localStorage.getItem('boards'));
