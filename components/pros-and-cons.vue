@@ -21,6 +21,16 @@
             </div>
         </div>
         <button @click="clear">Clear Boards</button>
+        <button @click="saveBoard">save board as : </button><input v-model="boardName" type="text">
+        <br>
+        <br>
+        <br>
+        <button @click="clearLocalStorage">clear local storage</button>
+        <button @click="loadBoard(boardId)">loadBoard</button>
+
+
+
+
     </div>
 </template>
 
@@ -30,10 +40,48 @@ export default {
         return {
             input: '',
             pros: [],
-            cons: []
+            cons: [],
+            boardName: 'board1',
+            boardId: '1'
+
         }
     },
     methods: {
+        saveBoard() {
+            const boards = JSON.parse(localStorage.getItem('boards')) || [];
+            const newBoard = {
+                id: boards.length + 1,
+                name: this.boardName,
+                pros: [...this.pros],
+                cons: [...this.cons]
+            }
+            if (!this.pros.length && !this.cons.length) {
+                alert('you cant save an empty board')
+                return
+            } else {
+                boards.push(newBoard)
+                localStorage.setItem('boards', JSON.stringify(boards))
+                this.boardName = ''
+            }
+
+        },
+        loadBoard(ID) {
+            const boards = JSON.parse(localStorage.getItem('boards'));
+            const board = boards.find(b => b.id === JSON.parse(ID));
+
+            if (!board) {
+                alert("Board not found!");
+                return;
+            } else {
+                this.boardName = board.name;
+                this.pros = board.pros;
+                this.cons = board.cons;
+            }
+        },
+        clearLocalStorage() {
+            localStorage.clear();
+        },
+
         addPro() {
             var inputElement = document.getElementById('input')
             if (this.input.trim() === '') {
