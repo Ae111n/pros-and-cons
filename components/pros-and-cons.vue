@@ -20,13 +20,14 @@
                 </ul>
             </div>
         </div>
-        <button @click="clear">Clear Boards</button>
-        <button @click="saveBoard">save board as : </button><input v-model="boardName" type="text">
-        <br>
-        <br>
-        <br>
-        <button @click="clearLocalStorage">clear local storage</button>
-        <button @click="loadBoard(boardId)">loadBoard</button>
+        <div id="controls">
+            <button @click="clear">Clear Boards</button>
+            <button @click="saveBoard">save board as : </button><input v-model="boardName" type="text">
+        </div>
+
+        <ul v-for="board in boards" :key="board">
+            <li class="boards-list" @click="loadBoard(board.id)">{{ board.name }}</li>
+        </ul>
 
 
 
@@ -42,10 +43,12 @@ export default {
             pros: [],
             cons: [],
             boardName: 'board1',
-            boardId: '1'
+            boardId: '1',
+            boards: JSON.parse(localStorage.getItem('boards'))
 
         }
     },
+
     methods: {
         saveBoard() {
             const boards = JSON.parse(localStorage.getItem('boards')) || [];
@@ -58,7 +61,11 @@ export default {
             if (!this.pros.length && !this.cons.length) {
                 alert('you cant save an empty board')
                 return
-            } else {
+            } else if (!this.boardName){
+                alert('you must choose a name to save the board ...')
+                return
+            }
+             else {
                 boards.push(newBoard)
                 localStorage.setItem('boards', JSON.stringify(boards))
                 this.boardName = ''
@@ -80,6 +87,7 @@ export default {
         },
         clearLocalStorage() {
             localStorage.clear();
+            this.boards = ''
         },
 
         addPro() {
@@ -128,6 +136,20 @@ export default {
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Orbitron:wght@400..900&display=swap');
 
+#controls {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+.boards-list {
+    font-family: "Gloria Hallelujah", cursive;
+   font-size: 34px;
+   cursor: pointer;
+}
+.boards-list:hover {
+    border-radius: 34%;
+    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+}
 .gloria-hallelujah-regular {
     font-family: "Gloria Hallelujah", cursive;
     font-weight: 300;
