@@ -139,7 +139,7 @@ export default {
 #controls {
     display: flex;
     flex-direction: row;
-    width: 100%;
+    width: 850px;
 }
 .boards-list {
     font-family: "Gloria Hallelujah", cursive;
