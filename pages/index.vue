@@ -1,21 +1,21 @@
 <template>
   <div class="container">
     <div class="input">
-      <input id="input" v-model="input" name="fName" type="text" placeholder="enter your text here">
-      <button @click="addPro">add pro</button>
-      <button @click="addCon">add con</button>
+      <input id="input" v-model="input" name="fName" type="text" :placeholder=this.placeholder>
+      <button @click="addItem('pro')">add pro</button>
+      <button @click="addItem('con')">add con</button>
     </div>
     <div class="output">
       <div class="pros">
         <legend>pros :</legend>
         <ul v-for="(pro, index) in pros" :key="index">
-          <li>{{ pro }} <span @click="deletePro(index)">X</span></li>
+          <li>{{ pro }} <span @click="deleteItem('pro', index)">X</span></li>
         </ul>
       </div>
       <div class="cons">
         <legend>cons :</legend>
         <ul v-for="(con, index) in cons" :key="index">
-          <li>{{ con }} <span @click="deleteCon(index)">X</span></li>
+          <li>{{ con }} <span @click="deleteItem('con', index)">X</span></li>
         </ul>
       </div>
     </div>
@@ -39,7 +39,8 @@ export default {
       cons: [],
       boardName: '',
       boardId: '1',
-      boards: JSON.parse(localStorage.getItem('boards'))
+      boards: JSON.parse(localStorage.getItem('boards')),
+      placeholder: 'enter text here !'
     }
   },
 
@@ -68,37 +69,37 @@ export default {
       window.location.reload();
     },
 
-    addPro() {
-      var inputElement = document.getElementById('input')
-      if (this.input.trim() === '') {
-        inputElement.placeholder = 'You must enter some text..';
-      } else if (this.pros.includes(this.input.trim())) {
-        inputElement.placeholder = 'This pro is already listed!';
+
+
+
+    addItem(type) {
+      let item = this.input.trim();
+
+      if (item === '') {
+        this.placeholder = 'You must enter some text..';
+      } else if (this.pros.includes(item)
+        || this.cons.includes(item)) {
+        this.placeholder = 'This item is already listed!';
         this.input = ''
       } else {
-        this.pros.push(this.input.trim());
-        this.input = '';
-        inputElement.placeholder = 'enter your text here';
+        if (type === 'pro') {
+          this.pros.push(item);
+          this.input = '';
+          this.placeholder = 'enter your text here';
+        }
+        if (type === 'con') {
+          this.cons.push(item);
+          this.input = '';
+          this.placeholder = 'enter your text here';
+        }
       }
     },
-    addCon() {
-      var inputElement = document.getElementById('input')
-      if (this.input.trim() === '') {
-        inputElement.placeholder = 'You must enter some text..';
-      } else if (this.cons.includes(this.input.trim())) {
-        inputElement.placeholder = 'This con is already listed!';
-        this.input = ''
-      } else {
-        this.cons.push(this.input.trim());
-        this.input = '';
-        inputElement.placeholder = 'enter your text here';
+    deleteItem(type, index) {
+      if (type === 'pro') {
+        this.pros.splice(index, 1);
+      } else if (type === 'con') {
+        this.cons.splice(index, 1);
       }
-    },
-    deletePro(index) {
-      this.pros.splice(index, 1);
-    },
-    deleteCon(index) {
-      this.cons.splice(index, 1);
     },
     clear() {
       this.input = '',
@@ -123,10 +124,12 @@ export default {
   font-size: 34px;
   cursor: pointer;
 }
+
 .nuxt-link {
   text-decoration: none;
   color: rgb(255, 255, 255);
 }
+
 .nuxt-link:visited {
   text-decoration: none;
   color: white
