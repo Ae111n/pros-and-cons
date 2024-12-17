@@ -1,8 +1,6 @@
 export default {
-  // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
 
-  // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'pros-and-cons',
     htmlAttrs: {
@@ -19,9 +17,6 @@ export default {
     ]
   },
 
-
-  // Auto import components: https://go.nuxtjs.dev/config-components
-  components: true,
 
 
 
